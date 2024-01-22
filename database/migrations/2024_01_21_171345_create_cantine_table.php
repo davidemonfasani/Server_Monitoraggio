@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('città', 35);
             $table->string('provincia', 35);
             $table->string('via', 35);
-            $table->integer('n°_civico', 15);
-            $table->integer('dimensione Mq', 35);
-            $table->integer('numero_sensori', 15);
+            $table->integer('n°_civico');
+            $table->integer('dimensione Mq');
+            $table->integer('numero_sensori');
             $table->timestamps();
         });
     }

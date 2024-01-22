@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('password', 300);
             $table->timestamps();
         });
+        Schema::dropIfExists('personal_access_tokens');
     }
 
     /**

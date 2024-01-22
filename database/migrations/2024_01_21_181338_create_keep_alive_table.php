@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('keep_alive', function (Blueprint $table) {
-            $table->id();
+            $table->id("id_keep_alive");
+            $table->unsignedBigInteger('id_sensore');
             $table->timestamps();
+            $table->foreign('id_sensore')->references('id_sensore')->on('sensori')->onDelete('cascade');
         });
     }
 

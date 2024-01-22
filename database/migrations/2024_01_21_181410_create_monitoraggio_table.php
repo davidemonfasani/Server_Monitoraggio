@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('monitoraggio', function (Blueprint $table) {
-            $table->id();
+            $table->id("id_monitoraggio");
+            $table->unsignedBigInteger('id_sensore');
+            $table->integer('Temperatura C°');
+            $table->integer('Umidità %');
             $table->timestamps();
+            $table->foreign('id_sensore')->references('id_sensore')->on('sensori')->onDelete('cascade');
         });
     }
 
