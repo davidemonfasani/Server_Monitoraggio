@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Foto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 class ImageController extends Controller
 {
     public function store(Request $request)
-{
+    {
     try {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -20,22 +20,15 @@ class ImageController extends Controller
         $request->image->move(public_path('images'), $imageName);
 
         // Create a new record in the Fotos table
-        $foto = new \App\Models\Foto;
+        $foto = new Foto();
         $foto->id_Sensor = $request->id_Sensor;
         $foto->path = 'images/'.$imageName;
         $foto->save();
-
-        $response = array();
-        $response['img inserita?'] = 'Immagine inserita';
-        $response['savattaggio database'] = 'Immagine inserita nel database';
-
-        return response()->json($response, 201);
-
+        return response()->json(['inserimento' => 'immagine inserita e salvata con successo'], 201);
     } catch (\Exception $e) {
         Log::error('Exception');
         Log::error($e->getMessage());
         return response()->json(['error' => $e->getMessage()], 404);
     }
-}
-
+    }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('cognome', 35);
             $table->string('email', 55)->unique();
             $table->string('password', 300);
+            $table->string('foto',255)->nullable();
             $table->timestamps();
         });
         Schema::dropIfExists('personal_access_tokens');

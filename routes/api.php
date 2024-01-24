@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,6 +16,9 @@ use App\Http\Controllers\ImageController;
 */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::group(['prefix' => 'User'], function () {
+Route::post('/Sign-in', [UserController::class, 'store']);//registrazione nuovo utente
 });
 Route::post('/upload',  [ImageController::class, 'store']);
 
