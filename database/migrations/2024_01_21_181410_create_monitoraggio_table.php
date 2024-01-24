@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('Monitoraggios', function (Blueprint $table) {
             $table->id("id_monitoraggio");
-            $table->unsignedBigInteger('id_sensore');
+            $table->unsignedBigInteger('id_Sensor');
             $table->integer('Temperatura C°');
             $table->integer('Umidità %');
             $table->integer('peso Kg');
             $table->timestamps();
-            $table->foreign('id_sensore')->references('id_sensore')->on('sensori')->onDelete('cascade');
+            $table->foreign('id_Sensor')->references('id_Sensor')->on('Sensors')->onDelete('cascade');
         });
     }
 

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('Keep_alives', function (Blueprint $table) {
             $table->id("id_keep_alive");
-            $table->unsignedBigInteger('id_sensore');
+            $table->unsignedBigInteger('id_Sensor');
             $table->timestamps();
-            $table->foreign('id_sensore')->references('id_sensore')->on('sensori')->onDelete('cascade');
+            $table->foreign('id_Sensor')->references('id_Sensor')->on('Sensors')->onDelete('cascade');
         });
     }
 

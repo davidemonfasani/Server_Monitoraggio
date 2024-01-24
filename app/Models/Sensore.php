@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sensore extends Model
+class Sensor extends Model
 {
     use HasFactory;
 
-    protected $table = 'Sensores';
-    protected $primaryKey = 'id_sensore';
+    protected $table = 'Sensors';
+    protected $primaryKey = 'id_Sensor';
     protected $fillable = [
         'id_cantina'
     ];
@@ -20,15 +20,15 @@ class Sensore extends Model
     }
     public function keepAlives()
     {
-        return $this->hasMany('App\Models\KeepAlive', 'id_sensore', 'id_sensore');
+        return $this->hasMany('App\Models\KeepAlive', 'id_Sensor', 'id_Sensor');
     }
     public function monitoraggios()
     {
-        return $this->hasMany('App\Models\Monitoraggio', 'id_sensore', 'id_sensore');
-    }   
+        return $this->hasMany('App\Models\Monitoraggio', 'id_Sensor', 'id_Sensor');
+    }
     public function fotos()
     {
-        return $this->hasMany('App\Models\Foto', 'id_sensore', 'id_sensore');
+        return $this->hasMany('App\Models\Foto', 'id_Sensor', 'id_Sensor');
     }
 
 }
