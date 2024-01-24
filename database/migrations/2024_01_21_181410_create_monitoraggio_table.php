@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monitoraggio', function (Blueprint $table) {
+        Schema::create('Monitoraggios', function (Blueprint $table) {
             $table->id("id_monitoraggio");
             $table->unsignedBigInteger('id_sensore');
             $table->integer('Temperatura C°');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monitoraggio');
+        Schema::dropIfExists('Monitoraggios');
     }
 };

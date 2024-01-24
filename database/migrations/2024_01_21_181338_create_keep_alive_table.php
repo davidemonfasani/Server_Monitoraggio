@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('keep_alive', function (Blueprint $table) {
+        Schema::create('Keep_alives', function (Blueprint $table) {
             $table->id("id_keep_alive");
             $table->unsignedBigInteger('id_sensore');
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('keep_alive');
+        Schema::dropIfExists('Keep_alives');
     }
 };

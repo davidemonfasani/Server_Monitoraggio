@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Cantina extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,14 @@ class User extends Model
      *
      * @var string
      */
-    protected $table = 'Users';
+    protected $table = 'Cantinas';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_user';
+    protected $primaryKey = 'id_cantina';
 
     /**
      * The attributes that are mass assignable.
@@ -30,12 +30,16 @@ class User extends Model
      */
     protected $fillable = [
         'nome',
-        'cognome',
-        'email',
-        'password',
+        'città',
+        'provincia',
+        'via',
+        'n°_civico',
+        'dimensione Mq',
+        'numero_sensori',
     ];
-    public function cantinas()
+    public function users()
     {
-        return $this->belongsToMany('App\Models\Cantina', 'Ass_cantinas', 'id_user', 'id_cantina');
+        return $this->belongsToMany('App\Models\User', 'Ass_cantinas', 'id_cantina', 'id_user');
     }
+
 }
