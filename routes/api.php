@@ -18,7 +18,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['prefix' => 'User'], function () {
-Route::post('/Sign-in', [UserController::class, 'store']);//registrazione nuovo utente
+    Route::post('/Sign-in', [UserController::class, 'store']);//registrazione nuovo utente
+    Route::post('/Login', [UserController::class, 'Login']);//login utente
 });
-Route::post('/upload',  [ImageController::class, 'store']);
+
+Route::group(['prefix' => 'Monitoring'], function () {
+    
+    Route::post('/upload',  [ImageController::class, 'store']);
+});
+
+
 

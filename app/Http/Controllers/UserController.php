@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Firebase\JWT\JWT;
 use Firebase\JWT\key;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -31,10 +33,49 @@ class UserController extends Controller
         $user->nome = $request->nome;
         $user->cognome = $request->cognome;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);//salva solo l'hash della passward
         $user->save();
         $jwt = UserController::generateJWT($user);
 
+        error_log('Generated JWT: ' . $jwt);
+        $response=[
+            'token' => $jwt,
+            "message"=> 'Registrazione Avvenuta!',
+        ];
+        return response()->json($response);
+    } catch (\Exception $e) {
+        Log::error('Exception');
+        Log::error($e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 404);
+    }
+    }
+    public function Login(Request $request)
+    {
+    try {
+      
+        $request->validate([
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:55',
+                'exists:Users,email',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'max:300',
+                //questa funzione controlla se la passward è uguale a quella che è salvata nel database
+                function ($attribute, $value, $fail) use ($request) {
+                    $user = User::where('email', $request->email)->first();
+                    if ($user && !Hash::check($request->password, $user->password)) {//confrota l'hash di quella della richiesta
+                        $fail('Email or password incorrect.');//manda un messaggio i errore nella validazione della richiesta
+                    }
+                }              
+            ],
+        ]);
+        $user=User::where('email', $request->email)->first();//prende il primo utente con quella password quindi l'unico dato che è unique
+        $jwt = UserController::generateJWT($user);
         error_log('Generated JWT: ' . $jwt);
         $response=[
             'token' => $jwt,
@@ -47,6 +88,10 @@ class UserController extends Controller
         return response()->json(['error' => $e->getMessage()], 404);
     }
     }
+
+
+
+
     private function generateJWT($data){
         $key = strval(env('JWT_KEY'));
         $exp_time = 5; //Days
@@ -79,7 +124,8 @@ class UserController extends Controller
             return null;
      }}
 
-        public function checkLogged(Request $request){
+    //controlla se il token è valido
+    public function checkLogged(Request $request){
             try
             {
                 $jwt = $request->token;
