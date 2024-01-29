@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Monitoraggio;
+use App\Models\Sensor;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -35,8 +37,21 @@ class MoniController extends Controller
             ]);
         }
         catch (ValidationException $e) {
-            $userEmail = Sensor::find($request->id_Sensor)->cellar->user->email;
-            Mail::to($userEmail)->send(new ValidationError($e->errors()));
+            
+            $id_cellar = \App\Models\Sensor::where('id_Sensor', '=', '1')
+            ->select('id_cellar')
+            ->get();
+
+            $emails = \App\Models\User::join('ass_cellars', 'ass_cellars.id_user', '=', 'users.id_user')
+            ->join('cellars', 'cellars.id_cellar', '=', 'ass_cellars.id_cellar')
+            ->where('cellars.id_cellar', '=', $id_cellar)
+            ->select('users.email')
+            ->get();
+
+            foreach ($emails as $mails) {
+                Mail::to($mail)->send(new ValidationError($e->errors()));
+            }
+
     
             throw $e;
         }

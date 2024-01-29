@@ -14,14 +14,14 @@ class Cantina extends Model
      *
      * @var string
      */
-    protected $table = 'Cantinas';
+    protected $table = 'Cellars';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_cantina';
+    protected $primaryKey = 'id_cellar';
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +39,7 @@ class Cantina extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'Ass_cantinas', 'id_cantina', 'id_user');
+        return $this->belongsToMany('App\Models\User', 'Ass_cellars', 'id_cellar', 'id_user');
     }
 
 }

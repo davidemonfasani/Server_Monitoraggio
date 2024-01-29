@@ -14,14 +14,14 @@ class AssCantinas extends Model
      *
      * @var string
      */
-    protected $table = 'Ass_cantinas';
+    protected $table = 'Ass_cellars';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_Ass_cantina';
+    protected $primaryKey = 'id_Ass_cellar';
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +30,7 @@ class AssCantinas extends Model
      */
     protected $fillable = [
         'id_user',
-        'id_cantina',
+        'id_cellar',
     ];
 
     /**
@@ -46,6 +46,6 @@ class AssCantinas extends Model
      */
     public function cantina()
     {
-        return $this->belongsTo('App\Models\Cantina', 'id_cantina', 'id_cantina');
+        return $this->belongsTo('App\Models\Cellars', 'id_cellar', 'id_cellar');
     }
 }
