@@ -10,11 +10,32 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Mail\Mailable;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+class ValidationError extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $errors;
+
+    public function __construct($errors)
+    {
+        $this->errors = $errors;
+    }
+
+    public function build()
+    {
+        return $this->view('emails.validationerror')
+                    ->with(['errors' => $this->errors]);
+    }
+}
+
 class MoniController extends Controller
 
 {
-    
-    
+
+
     public function store(Request $request)
     {
         try {
@@ -39,36 +60,31 @@ class MoniController extends Controller
             ]);
         }
         catch (ValidationException $e) {
-            
+
             $id_cellar = \App\Models\Sensor::where('id_Sensor', '=', $request->id_Sensor)
             ->select('id_cellar')
-            ->get();
-            $id_user=\App\Models\AssCellar::where('id_cellar', '=', $id_cellar)->get();
-     
-            \Log::info($id_user);
-            
-         
-            $emails = User::join('Ass_cellars', 'Ass_cellars.id_user', '=', 'users.id_user')
-            ->where('Ass_cellars.id_cellar', '=', $id_cellar)
-            ->select('users.email')
-            ->get();
-            \Log::info($emails);
+            ->first();
 
-            foreach ($emails as $result) {
-            echo $result->email;
+            $assCellar=\App\Models\AssCellar::where('id_cellar', '=', $id_cellar->id_cellar)->get();
+
+
+            foreach ($assCellar as $assCellar) {
+                $user = User::where('id_user','=',$assCellar->id_user)->first();
+                if ($user) {
+                    $email = $user->email;
+                    Mail::raw($e->getMessage(), function ($message) use ($email) {
+                        $message->to($email)
+                                ->subject('Validation Error');
+                    });
+                    return response()->json([
+                         $id_cellar,
+                        'id_user'=>$user,
+                        $email
+                    ]);
+                }
             }
 
 
-            return response()->json([
-                'error' => $emails]);
-            foreach ($emails as $mails) {
-                Mail::to($mail)->send(new ValidationError($e->errors()));
-            }
-
-            return response()->json([
-                'error' => $e->getMessage(),
-                'emails'=> $emails,
-            ], 404);
             throw $e;
         }
         catch (\Exception $e) {
@@ -77,8 +93,8 @@ class MoniController extends Controller
             return response()->json(['error' => $e->getMessage()], 404);
         }
     }
-    
-    
+
+
 
 
 }
