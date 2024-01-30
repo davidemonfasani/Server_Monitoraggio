@@ -9,7 +9,7 @@ class User extends Model
 {
     use HasFactory;
 
-    protected $table = 'Users';
+    protected $table = 'users';
 
     protected $primaryKey = 'id_user';
 
@@ -27,6 +27,6 @@ class User extends Model
     
     public function cantinas()
     {
-        return $this->belongsToMany('App\Models\Cantina', 'Ass_cantinas', 'id_user', 'id_cantina');
+        return $this->belongsToMany('App\Models\Cellars', 'ass_cellars', 'id_user', 'id_cellar');
     }
 }

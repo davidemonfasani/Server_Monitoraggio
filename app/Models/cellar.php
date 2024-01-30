@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cantina extends Model
+class cellar extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Cantina extends Model
      *
      * @var string
      */
-    protected $table = 'Cellars';
+    protected $table = 'cellars';
 
     /**
      * The primary key associated with the table.
@@ -39,7 +39,7 @@ class Cantina extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'Ass_cellars', 'id_cellar', 'id_user');
+        return $this->belongsToMany('App\Models\User', 'ass_cellars', 'id_cellar', 'id_user');
     }
 
 }

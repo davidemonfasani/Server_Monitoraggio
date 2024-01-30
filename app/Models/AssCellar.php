@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AssCantinas extends Model
+class AssCellar extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,14 @@ class AssCantinas extends Model
      *
      * @var string
      */
-    protected $table = 'Ass_cellars';
+    protected $table = 'ass_cellars';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_Ass_cellar';
+    protected $primaryKey = 'id_ass_cellar';
 
     /**
      * The attributes that are mass assignable.

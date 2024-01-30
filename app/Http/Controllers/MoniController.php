@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\Monitoraggio;
 use App\Models\Sensor;
 use App\Models\User;
+use App\Models\AssCellar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 class MoniController extends Controller
 
 {
@@ -38,21 +40,35 @@ class MoniController extends Controller
         }
         catch (ValidationException $e) {
             
-            $id_cellar = \App\Models\Sensor::where('id_Sensor', '=', '1')
+            $id_cellar = \App\Models\Sensor::where('id_Sensor', '=', $request->id_Sensor)
             ->select('id_cellar')
             ->get();
-
-            $emails = \App\Models\User::join('ass_cellars', 'ass_cellars.id_user', '=', 'users.id_user')
-            ->join('cellars', 'cellars.id_cellar', '=', 'ass_cellars.id_cellar')
-            ->where('cellars.id_cellar', '=', $id_cellar)
+            $id_user=\App\Models\AssCellar::where('id_cellar', '=', $id_cellar)->get();
+     
+            \Log::info($id_user);
+            
+         
+            $emails = User::join('Ass_cellars', 'Ass_cellars.id_user', '=', 'users.id_user')
+            ->where('Ass_cellars.id_cellar', '=', $id_cellar)
             ->select('users.email')
             ->get();
+            \Log::info($emails);
 
+            foreach ($emails as $result) {
+            echo $result->email;
+            }
+
+
+            return response()->json([
+                'error' => $emails]);
             foreach ($emails as $mails) {
                 Mail::to($mail)->send(new ValidationError($e->errors()));
             }
 
-    
+            return response()->json([
+                'error' => $e->getMessage(),
+                'emails'=> $emails,
+            ], 404);
             throw $e;
         }
         catch (\Exception $e) {
