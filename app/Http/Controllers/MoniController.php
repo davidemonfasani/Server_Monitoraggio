@@ -13,23 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Mail\Mailable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
-class ValidationError extends Mailable
-{
-    use Queueable, SerializesModels;
 
-    public $errors;
-
-    public function __construct($errors)
-    {
-        $this->errors = $errors;
-    }
-
-    public function build()
-    {
-        return $this->view('emails.validationerror')
-                    ->with(['errors' => $this->errors]);
-    }
-}
 
 class MoniController extends Controller
 
