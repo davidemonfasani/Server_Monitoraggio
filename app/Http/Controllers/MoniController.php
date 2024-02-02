@@ -56,10 +56,7 @@ class MoniController extends Controller
                 $user = User::where('id_user','=',$assCellar->id_user)->first();
                 if ($user) {
                     $email = $user->email;
-                    Mail::raw($e->getMessage(), function ($message) use ($email) {
-                        $message->to($email)
-                                ->subject('Validation Error');
-                    });
+                    Mail::to($email)->send(new MoniError($e->getMessage()));
                     return response()->json([
                          $id_cellar,
                         'id_user'=>$user,
