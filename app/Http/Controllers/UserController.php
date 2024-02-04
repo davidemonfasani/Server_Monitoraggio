@@ -52,7 +52,7 @@ class UserController extends Controller
     public function Login(Request $request)
     {
     try {
-      
+
         $request->validate([
             'email' => [
                 'required',
@@ -71,7 +71,7 @@ class UserController extends Controller
                     if ($user && !Hash::check($request->password, $user->password)) {//confrota l'hash di quella della richiesta
                         $fail('Email or password incorrect.');//manda un messaggio i errore nella validazione della richiesta
                     }
-                }              
+                }
             ],
         ]);
         $user=User::where('email', $request->email)->first();//prende il primo utente con quella password quindi l'unico dato che è unique
@@ -88,9 +88,6 @@ class UserController extends Controller
         return response()->json(['error' => $e->getMessage()], 404);
     }
     }
-
-
-
 
     private function generateJWT($data){
         $key = strval(env('JWT_KEY'));
@@ -109,7 +106,6 @@ class UserController extends Controller
 
         return $jwt;
     }
-
 
     private function decodeJWT($jwt){
         $key = env('JWT_KEY');
@@ -152,4 +148,6 @@ class UserController extends Controller
                 return response()->json(['error' => $e->getMessage()],401);
             }
         }
+
+
 }

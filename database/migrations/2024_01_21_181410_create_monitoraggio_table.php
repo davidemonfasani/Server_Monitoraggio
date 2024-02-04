@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('Monitoraggios', function (Blueprint $table) {
             $table->id("id_monitoraggio");
             $table->unsignedBigInteger('id_Sensor');
-            $table->integer('Temperatura C°');
-            $table->integer('Umidità %');
-            $table->integer('peso Kg');
+            $table->integer('Temperatura');
+            $table->integer('Umidità');
+            $table->integer('Peso');
             $table->timestamps();
             $table->foreign('id_Sensor')->references('id_Sensor')->on('Sensors')->onDelete('cascade');
         });

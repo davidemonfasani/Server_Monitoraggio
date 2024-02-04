@@ -10,10 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Mail\Mailable;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-
+use App\Mail\MoniError;
 
 class MoniController extends Controller
 
@@ -42,6 +39,13 @@ class MoniController extends Controller
                     'integer',
                 ],
             ]);
+            $msg = new Monitoraggio();
+            $msg->id_Sensor=$request->id_Sensor;
+            $msg->Umidità=$request->Umidità;
+            $msg->Temperatura=$request->Temperatura;
+            $msg->Peso=$request->Peso;
+            $msg->save();
+
         }
         catch (ValidationException $e) {
 

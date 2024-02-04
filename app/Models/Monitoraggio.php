@@ -13,8 +13,8 @@ class Monitoraggio extends Model
     protected $primaryKey = 'id_monitoraggio';
     protected $fillable = [
         'id_Sensor',
-        'Temperatura C°',
-        'Umidità %',
-        'peso Kg'
+        'Temperatura',
+        'Umidità',
+        'Peso'
     ];
 }

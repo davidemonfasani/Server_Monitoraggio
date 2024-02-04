@@ -12,8 +12,7 @@ return [
     | and used as needed; however, this mailer will be used by default.
     |
     */
-
-    'default' => env('MAIL_MAILER', 'mailgun'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
 
     /*
@@ -34,11 +33,12 @@ return [
     |
     */
 
+
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
@@ -109,7 +109,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'davide.monfasani.studenti@isii.it'),
+        'address' => env('MAIL_FROM_ADDRESS', 'xfacev@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
     /*

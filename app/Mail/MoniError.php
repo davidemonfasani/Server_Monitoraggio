@@ -15,14 +15,16 @@ class MoniError extends Mailable
 
     public function __construct($msg)
     {
-        $this->$msg =$msg;
+        $this->msg = $msg;
     }
 
     public function build()
     {
         return $this->subject('Errori in un msg di monitoraggio')
-                    ->from('davide.monfasani.studenti@isii.it', 'Davide Zsolt Monfasani')
+                    ->from( env('MAIL_FROM_ADDRESS'),  env('MAIL_FROM_NAME'))
                     ->text('emails.validationerror_plain')
-                    ->with($msg);
+                    >with([
+                        'msg' => $this->msg
+                    ]);
     }
 }
