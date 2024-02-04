@@ -12,16 +12,17 @@ class MoniError extends Mailable
     use Queueable, SerializesModels;
 
     public $msg;
+    public string $obj;
 
-    public function __construct($msg)
+    public function __construct($msg,$obj)
     {
         $this->msg = $msg;
+        $this->obj = $obj;
     }
 
     public function build()
     {
-        return $this->subject('Errori in un msg di monitoraggio')
-                    ->from( env('MAIL_FROM_ADDRESS'),  env('MAIL_FROM_NAME'))
+        return $this->subject($this->obj)
                     ->text('emails.validationerror_plain')
                     >with([
                         'msg' => $this->msg

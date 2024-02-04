@@ -12,11 +12,15 @@ class Sensor extends Model
     protected $table = 'Sensors';
     protected $primaryKey = 'id_Sensor';
     protected $fillable = [
-        'id_cantina'
+        'id_cellar',
+        'Temperatura-Max',//target che deve mantenere
+        'Umidità-Max',
+        'Temperatura-Min',//target che deve mantenere
+        'Umidità-Min',
     ];
-    public function cantina()
+    public function cellar()
     {
-        return $this->belongsTo('App\Models\Cantina', 'id_cantina', 'id_cantina');
+        return $this->belongsTo('App\Models\cellar', 'id_cellar', 'id_cellar');
     }
     public function keepAlives()
     {
