@@ -6,18 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\AssCellar;
 use App\Models\cellar;
-
+use App\Traits\UserAuthTrait;
 
 class CellarController extends Controller
 {
-    public function fetch_cellars(Request $request){
+    use UserAuthTrait;
+    public function retrive_cellars(Request $request){
         try {
 
             $request->validate([
-                'id_user' => [
-                    'required',
-                    'integer',
-                ]
+                'email' => 'required|string|email|max:55',
+                'old_password' => 'required|string|max:300',
+                'new_password' => 'required|string|max:300|different:old_password',
             ]);
             $cellars= cellar::Where('id_user' ,'=', $request->id_user)->get();
             $response=[
@@ -32,5 +32,6 @@ class CellarController extends Controller
 
 
     }
+    
 
 }

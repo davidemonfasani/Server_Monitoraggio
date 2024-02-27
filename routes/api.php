@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MoniController;
+use App\Http\Controllers\CellarController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,13 +20,21 @@ use App\Http\Controllers\MoniController;
     return $request->user();
 });*/
 Route::group(['prefix' => 'User'], function () {
-    Route::post('/Sign-in', [UserController::class, 'store']);//registrazione nuovo utente
-    Route::post('/Login', [UserController::class, 'Login']);//login utente
+    Route::post('/Sign-in', [UserController::class, 'store']); // registration of new user
+    Route::post('/Login', [UserController::class, 'Login']); // user login
+    Route::put('updatePass', [UserController::class, 'updatePassword']); // update the password
+    Route::post('checkLogged', [UserController::class,'checkLogged']);
 });
+
 
 Route::group(['prefix' => 'Monitoring'], function () {
     Route::post('/report',[MoniController::class, 'store']);
     Route::post('/upload',  [ImageController::class, 'store']);
+});
+
+Route::group(['prefix' => 'Cellars'], function () {
+    Route::post('/new',[CellarController::class, 'store']);
+    Route::get('/retrive',  [CellarController::class, 'retrive_cellars']);
 });
 
 
