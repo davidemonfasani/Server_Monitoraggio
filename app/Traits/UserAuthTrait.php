@@ -32,11 +32,16 @@ trait UserAuthTrait {
     {
         $key = env('JWT_KEY');
         try {
-            $decoded_jwt = JWT::decode($jwt, $key, ['HS256']);
+
+
+            // Decode the JWT using the variable
+            $decoded_jwt = JWT::decode($jwt, new Key($key, 'HS256'));
+            
+
             return $decoded_jwt;
     
         } catch (\Exception $e) {
-            return null;
+            return $e;
         }
     }
     

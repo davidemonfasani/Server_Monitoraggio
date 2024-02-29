@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Monitoraggio;
 use App\Models\Sensor;
 use App\Models\User;
+use App\Models\Cellar;
 use App\Models\AssCellar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -53,8 +54,8 @@ class MoniController extends Controller
             $recordMoni->save();
 
 
-            $sensor = \App\Models\Sensor::where('id_Sensor', '=', $request->id_Sensor)->first();
-            $cellar = \App\Models\Cellar::where('id_cellar', '=', $sensor->id_cellar)->first();
+            $sensor = Sensor::where('id_Sensor', '=', $request->id_Sensor)->first();
+            $cellar = Cellar::where('id_cellar', '=', $sensor->id_cellar)->first();
 
             $message = '';
 
@@ -75,7 +76,7 @@ class MoniController extends Controller
             }
 
             if (!empty($message)) {
-                $assCellar = \App\Models\AssCellar::where('id_cellar', '=', $cellar->id_cellar)->get();
+                $assCellar = AssCellar::where('id_cellar', '=', $cellar->id_cellar)->get();
                 foreach ($assCellar as $assCellar) {
                     $user = User::where('id_user','=',$assCellar->id_user)->first();
                     MoniController::sendEmail($user, $message, $obj);
@@ -87,11 +88,11 @@ class MoniController extends Controller
         }
         catch (ValidationException $e) {
 
-            $id_cellar = \App\Models\Sensor::where('id_Sensor', '=', $request->id_Sensor)
+            $id_cellar = Sensor::where('id_Sensor', '=', $request->id_Sensor)
             ->select('id_cellar')
             ->first();
 
-            $assCellar=\App\Models\AssCellar::where('id_cellar', '=', $id_cellar->id_cellar)->get();
+            $assCellar=AssCellar::where('id_cellar', '=', $id_cellar->id_cellar)->get();
 
 
             $errors = $e->errors(); // prende tutti gli errori
