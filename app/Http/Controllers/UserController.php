@@ -105,19 +105,22 @@ class UserController extends Controller
             if (!$user || !Hash::check($request->old_password, $user->password)) {
                 return response()->json(['error' => 'Invalid email or password'], 404);
             }
+            else{
+                $user->password = Hash::make($request->new_password);
+                $user->save();
+    
+                $jwt = $this->generateJWT($user);
+    
+                error_log('Generated JWT: ' . $jwt);
+                $response = [
+                    'token' => $jwt,
+                    "message" => 'Password updated successfully!',
+                ];
+    
+                return response()->json($response);
+            }
 
-            $user->password = Hash::make($request->new_password);
-            $user->save();
 
-            $jwt = $this->generateJWT($user);
-
-            error_log('Generated JWT: ' . $jwt);
-            $response = [
-                'token' => $jwt,
-                "message" => 'Password updated successfully!',
-            ];
-
-            return response()->json($response);
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());

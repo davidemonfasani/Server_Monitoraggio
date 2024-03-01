@@ -55,7 +55,7 @@ class MoniController extends Controller
 
 
             $sensor = Sensor::where('id_Sensor', '=', $request->id_Sensor)->first();
-            $cellar = Cellar::where('id_cellar', '=', $sensor->id_cellar)->first();
+            $cellar = $sensor->cellar;
 
             $message = '';
 
@@ -76,25 +76,20 @@ class MoniController extends Controller
             }
 
             if (!empty($message)) {
-                $assCellar = AssCellar::where('id_cellar', '=', $cellar->id_cellar)->get();
-                foreach ($assCellar as $assCellar) {
-                    $user = User::where('id_user','=',$assCellar->id_user)->first();
+                $users = $cellar->users;//prende gli utenti associati alla cantina del sensore
+                foreach ($users as $user) {
                     MoniController::sendEmail($user, $message, $obj);
                 }
             }
-
-            return response()->json('Messaggio monitoraggio avvenuto');
+            else{
+                return response()->json('Messaggio monitoraggio avvenuto');
+            }
+         
 
         }
         catch (ValidationException $e) {
 
-            $id_cellar = Sensor::where('id_Sensor', '=', $request->id_Sensor)
-            ->select('id_cellar')
-            ->first();
-
-            $assCellar=AssCellar::where('id_cellar', '=', $id_cellar->id_cellar)->get();
-
-
+            $users = Sensor::where('id_Sensor', '=', $request->id_Sensor)->first()->cellar->users;//prende gli utenti associati alla cantina del sensore
             $errors = $e->errors(); // prende tutti gli errori
 
             // e gli converte in una sola stringa
@@ -102,17 +97,12 @@ class MoniController extends Controller
             foreach ($errors as $field => $messages) {
                 $errorMessage .= $field . ': ' . implode(', ', $messages) . "\n";
             }
-
-            foreach ($assCellar as $assCellar) {
-                $user = User::where('id_user','=',$assCellar->id_user)->first();
-                MoniController::sendEmail($user,$errorMessage, 'Errori Da un sensore');
-                }
-                return response()->json([
-                    $errors
-                ], 400);
-
-
-            throw $e;
+            foreach ($users as $user) {
+                 MoniController::sendEmail($user,$errorMessage, 'Errori Da un sensore');
+            }
+            return response()->json([
+                $errors
+            ], 400);
         }
         catch (\Exception $e) {
             Log::error('Exception');
