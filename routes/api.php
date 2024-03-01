@@ -22,8 +22,8 @@ use App\Http\Controllers\CellarController;
 Route::group(['prefix' => 'User'], function () {
     Route::post('/Sign-in', [UserController::class, 'store']); // registration of new user
     Route::post('/Login', [UserController::class, 'Login']); // user login
-    Route::put('updatePass', [UserController::class, 'updatePassword']); // update the password
-    Route::post('checkLogged', [UserController::class,'checkLogged']);
+    Route::put('/updatePass', [UserController::class, 'updatePassword']); // update the password
+    Route::post('/checkLogged', [UserController::class,'checkLogged']);
 });
 
 
@@ -34,7 +34,8 @@ Route::group(['prefix' => 'Monitoring'], function () {
 
 Route::group(['prefix' => 'Cellars'], function () {
     Route::post('/new',[CellarController::class, 'store']);
-    Route::get('/retrive',  [CellarController::class, 'retrive_cellars']);
+    Route::post('/retrive',  [CellarController::class, 'retrive_cellars']);//anche se è un metodo che restituisce informazioni dal database
+    //, utilizzo il metodo post per nascondere il token (che altimenti sarebbe nel'url)
 });
 
 

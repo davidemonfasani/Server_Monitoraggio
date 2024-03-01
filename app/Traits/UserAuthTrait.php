@@ -15,7 +15,7 @@ trait UserAuthTrait {
         $exp_time = 5; //Days
 
         $payload = array(
-            "id" => $data->id,
+            "id" => $data->id_user,
             'nome' => $data->nome,
             'cognome' => $data->cognome,
             'email' => $data->email,
@@ -54,11 +54,12 @@ trait UserAuthTrait {
         try {
             $request->validate(['token'=>'required']);
             $jwt = $request->token;
-            if ($this->decodeJWT($jwt)) {
-                $decoded_jwt = $this->decodeJWT($jwt);
+            $decoded_jwt = $this->decodeJWT($jwt);
+            return response()->json($decoded_jwt);
+            if ($decoded_jwt) {
 
                 if (Carbon::now()->timestamp > $decoded_jwt->iat && Carbon::now()->timestamp < $decoded_jwt->exp) {
-                    return response()->json($jwt);
+                    return response()->json($decoded_jwt);
                 } else {
                     return response()->json(['error' => 'session expired'], 403);
                 }

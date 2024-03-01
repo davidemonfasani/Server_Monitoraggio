@@ -25,8 +25,8 @@ class User extends Model
         'password',
     ];
     
-    public function cantinas()
+    public function cellars()
     {
-        return $this->belongsToMany('App\Models\Cellars', 'ass_cellars', 'id_user', 'id_cellar');
+        return $this->belongsToMany('App\Models\Cellar', 'ass_cellars', 'id_user', 'id_cellar');
     }
 }

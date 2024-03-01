@@ -44,8 +44,8 @@ class AssCellar extends Model
     /**
      * Get the cantina that owns the AssCantina.
      */
-    public function cantina()
+    public function cellar()
     {
-        return $this->belongsTo('App\Models\Cellars', 'id_cellar', 'id_cellar');
+        return $this->belongsTo('App\Models\Cellar', 'id_cellar', 'id_cellar');
     }
 }
