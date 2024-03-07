@@ -49,6 +49,14 @@ class CheckSensors extends Command
                     $this->sendEmail($user, $message, "Errore sul sensore N {$sensor->id_Sensor}");
                 }
             }
+            else if(!$lastRecord)
+            {
+                $message = "Il sensore N {$sensor->id_Sensor} non ha mai inviato messaggi";
+                $users = $sensor->cellar->users;
+                foreach ($users as $user) {
+                    $this->sendEmail($user, $message, "Errore sul sensore N {$sensor->id_Sensor}");
+                }
+            }
         }
     }
 }
