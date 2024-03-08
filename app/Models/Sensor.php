@@ -13,10 +13,13 @@ class Sensor extends Model
     protected $primaryKey = 'id_Sensor';
     protected $fillable = [
         'id_cellar',
-        'Temperatura-Max',//target che deve mantenere
-        'Umidità-Max',
-        'Temperatura-Min',//target che deve mantenere
-        'Umidità-Min',
+        'TemperaturaMax',//target che deve mantenere
+        'UmiditàMax',
+        'TemperaturaMin',//target che deve mantenere
+        'UmiditàMin',
+        'TemperaturaNow',
+        'UmiditàNow',
+        'PesoNow'
     ];
     public function cellar()
     {

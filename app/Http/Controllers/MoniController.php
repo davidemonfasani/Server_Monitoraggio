@@ -58,22 +58,25 @@ class MoniController extends Controller
 
 
             $sensor = Sensor::where('id_Sensor', '=', $request->id_Sensor)->first();
+            $sensor->TemperaturaNow=$recordMoni->Temperatura;
+            $sensor->UmiditàNow=$recordMoni->Umidità;
+            $sensor->PesoNow=$recordMoni->Peso;
             $cellar = $sensor->cellar;
 
             $message = '';
 
-            if ($request->Temperatura > $sensor->{'Temperatura-Max'}) {
+            if ($request->Temperatura > $sensor->TemperaturaMax) {
                 $message .= "Temperatura eccessiva sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. " . `\n`;
                 $obj = 'Temperatura eccessiva';
-            } elseif ($request->Temperatura < $sensor->{'Temperatura-Min'}) {
+            } elseif ($request->Temperatura < $sensor->TemperaturaMin) {
                 $message .= "Temperatura insufficiente sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. " . `\n`;
                 $obj = 'Temperatura insufficiente';
             }
 
-            if ($request->Umidità > $sensor->{'Umidità-Max'}) {
+            if ($request->Umidità > $sensor->UmiditàMax) {
                 $message .= "Umidità eccessiva sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. ";
                 $obj .= 'Umidità eccessiva';
-            } elseif ($request->Umidità < $sensor->{'Umidità-Min'}) {
+            } elseif ($request->Umidità < $sensor->UmiditàMin) {
                 $message .= "Umidità insufficiente sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. ";
                 $obj .= 'Umidità insufficiente';
             }

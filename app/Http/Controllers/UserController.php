@@ -76,7 +76,7 @@ class UserController extends Controller
                 ],
             ]);
             $user = User::where('email', $request->email)->first();//prende il primo utente con quella password quindi l'unico dato che è unique
-            
+
             $jwt = $this->generateJWT($user);
             error_log('Generated JWT: ' . $jwt);
             $response = [
@@ -90,7 +90,7 @@ class UserController extends Controller
             return response()->json(['error' => $e->getMessage()], 404);
         }
     }
-    
+
     public function updatePassword(Request $request)
     {
         try {
@@ -108,15 +108,15 @@ class UserController extends Controller
             else{
                 $user->password = Hash::make($request->new_password);
                 $user->save();
-    
+
                 $jwt = $this->generateJWT($user);
-    
+
                 error_log('Generated JWT: ' . $jwt);
                 $response = [
                     'token' => $jwt,
                     "message" => 'Password updated successfully!',
                 ];
-    
+
                 return response()->json($response);
             }
 
@@ -132,5 +132,9 @@ class UserController extends Controller
     }
 
 
+    public function checkLogged(Request $request)
+    {
+        return response()->checkValidToken($request->token);
+    }
 
 }

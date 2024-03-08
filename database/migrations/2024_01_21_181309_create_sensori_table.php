@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('Sensors', function (Blueprint $table) {
             $table->id('id_Sensor');
             $table->unsignedBigInteger('id_cellar');
-            $table->float('Temperatura-Max');
-            $table->float('Umidità-Max');
-            $table->float('Temperatura-Min');
-            $table->float('Umidità-Min');
+            $table->float('TemperaturaMax');
+            $table->float('UmiditàMax');
+            $table->float('TemperaturaMin');
+            $table->float('UmiditàMin');
+            $table->float('TemperaturaNow');
+            $table->float('UmiditàNow');
+            $table->float('PesoNow');
             $table->integer('Timer');
             $table->timestamps();
             $table->foreign('id_cellar')->references('id_cellar')->on('cellars')->onDelete('cascade');

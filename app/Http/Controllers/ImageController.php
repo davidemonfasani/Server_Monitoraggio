@@ -22,7 +22,7 @@ class ImageController extends Controller
         // Create a new record in the Fotos table
         $foto = new Foto();
         $foto->id_Sensor = $request->id_Sensor;
-        $foto->path = 'images/'.$imageName;
+        $foto->path = 'images/Monitoring/'.$imageName;
         $foto->save();
         return response()->json(['inserimento' => 'immagine inserita e salvata con successo'], 201);
     } catch (\Exception $e) {

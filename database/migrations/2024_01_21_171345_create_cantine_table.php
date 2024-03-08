@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('Cellars', function (Blueprint $table) {
             $table->id('id_cellar');
-            $table->string('nome', 35);
+            $table->string('nome', 35)->unique();
             $table->string('città', 35);
             $table->string('provincia', 35);
             $table->string('via', 35);
             $table->integer('n°_civico');
-            $table->integer('dimensione Mq');
+            $table->integer('dimensioneMq');
             $table->integer('numero_sensori');
             $table->timestamps();
         });

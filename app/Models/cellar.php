@@ -41,5 +41,9 @@ class cellar extends Model
     {
         return $this->belongsToMany('App\Models\User', 'ass_cellars', 'id_cellar', 'id_user');
     }
+    public function sensors()
+    {
+        return $this->hasMany('App\Models\Sensor', 'id_cellar', 'id_cellar');
+    }
 
 }
