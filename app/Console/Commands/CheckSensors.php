@@ -30,7 +30,7 @@ class CheckSensors extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle()//funzione di keep alive
     {
      
         // Ottieni tutti i sensori

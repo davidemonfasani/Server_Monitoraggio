@@ -44,6 +44,26 @@ class CellarController extends Controller
         }
     }
 
+    public function CellarsMoniINFO(Request $request)   {
+        try {
+            $request->validate([
+                'token' => [
+                    'required'
+                ],
+                'id_cellar'=>[
+                    'required',
+                    'exists:Cellars,id_cellar',
+                ]
+
+            ]);
+            $users=Cellar::where('id_cellar', $request->id_cellar)->first()->users;
+            $user = User::where('id_user', $decoded_jwt->id)->first();
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
+
     private function retriveCellars($decoded_jwt)
     {
         $user = User::where('id_user', $decoded_jwt->id)->first();
