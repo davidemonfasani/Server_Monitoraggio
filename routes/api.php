@@ -6,6 +6,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MoniController;
 use App\Http\Controllers\CellarController;
+use App\Http\Controllers\SensorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,10 +27,13 @@ Route::group(['prefix' => 'User'], function () {
     Route::post('/checkLogged', [UserController::class,'checkLogged']);
 });
 
-
 Route::group(['prefix' => 'Monitoring'], function () {
     Route::post('/report',[MoniController::class, 'store']);
     Route::post('/upload',  [ImageController::class, 'store']);
+});
+Route::group(['prefix' => 'Sensor'], function () {
+    Route::post('/new',[SensorController::class, 'store']);
+    Route::put('/update',[SensorController::class, 'update']);
 });
 
 Route::group(['prefix' => 'Cellars'], function () {

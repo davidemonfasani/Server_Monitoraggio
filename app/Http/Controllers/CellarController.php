@@ -76,9 +76,7 @@ class CellarController extends Controller
             if (isset($decoded_jwt->exp)) //controlla se è  un token
             {
                 if ($request->email !== $decoded_jwt->email) {
-
                     $cellar = Cellar::where('id_cellar', $request->id_cellar)->first();
-                    if ($cellar) {
                         $users = $cellar->users;
                         if ($users->contains('id_user', $decoded_jwt->id)) {//se l'utente che ha fatto la rischiesta è associato alla cantina
                             $newUser = User::where('email', $request->email)->first();
@@ -95,9 +93,7 @@ class CellarController extends Controller
                         } else {
                             return response()->json(['error' => 'non autorizzato per questa cantina'], 401);
                         }
-                    } else {
-                        return response()->json(['error' => 'cantina non trovata'], 404);
-                    }
+
                 } else {
                     return response()->json(['error' => 'Non puoi auto associarti una cantina'], 404);
                 }
