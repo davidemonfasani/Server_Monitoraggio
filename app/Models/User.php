@@ -9,7 +9,7 @@ class User extends Model
 {
     use HasFactory;
 
-    protected $table = 'users';
+    protected $table = 'Users';
 
     protected $primaryKey = 'id_user';
 
@@ -24,7 +24,7 @@ class User extends Model
     protected $hidden = [
         'password',
     ];
-    
+
     public function cellars()
     {
         return $this->belongsToMany('App\Models\Cellar', 'ass_cellars', 'id_user', 'id_cellar');

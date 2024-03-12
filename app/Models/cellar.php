@@ -14,7 +14,7 @@ class cellar extends Model
      *
      * @var string
      */
-    protected $table = 'cellars';
+    protected $table = 'Cellars';
 
     /**
      * The primary key associated with the table.

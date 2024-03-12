@@ -34,6 +34,8 @@ Route::group(['prefix' => 'Monitoring'], function () {
 Route::group(['prefix' => 'Sensor'], function () {
     Route::post('/new',[SensorController::class, 'store']);
     Route::put('/update',[SensorController::class, 'update']);
+    Route::get('/info',[SensorController::class, 'RetriveInfo']);
+
 });
 
 Route::group(['prefix' => 'Cellars'], function () {

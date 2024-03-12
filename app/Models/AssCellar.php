@@ -14,7 +14,7 @@ class AssCellar extends Model
      *
      * @var string
      */
-    protected $table = 'ass_cellars';
+    protected $table = 'Ass_cellars';
 
     /**
      * The primary key associated with the table.

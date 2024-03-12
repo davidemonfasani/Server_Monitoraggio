@@ -13,12 +13,12 @@ class Foto extends Model
     protected $primaryKey = 'id_foto';
 
     protected $fillable = [
-        'id_sensore',
+        'id_sensor',
         'path'
     ];
 
     public function sensore()
     {
-        return $this->belongsTo('App\Models\Sensori', 'id_sensore', 'id_sensore');
+        return $this->belongsTo('App\Models\Sensor', 'id_sensor', 'id_sensor');
     }
 }

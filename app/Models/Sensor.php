@@ -10,7 +10,7 @@ class Sensor extends Model
     use HasFactory;
 
     protected $table = 'Sensors';
-    protected $primaryKey = 'id_Sensor';
+    protected $primaryKey = 'id_sensor';
     protected $fillable = [
         'id_cellar',
         'TemperaturaMax',//target che deve mantenere
@@ -27,15 +27,15 @@ class Sensor extends Model
     }
     public function keepAlives()
     {
-        return $this->hasMany('App\Models\KeepAlive', 'id_Sensor', 'id_Sensor');
+        return $this->hasMany('App\Models\KeepAlive', 'id_sensor', 'id_sensor');
     }
     public function monitoraggios()
     {
-        return $this->hasMany('App\Models\Monitoraggio', 'id_Sensor', 'id_Sensor');
+        return $this->hasMany('App\Models\Monitoraggio', 'id_sensor', 'id_sensor');
     }
     public function fotos()
     {
-        return $this->hasMany('App\Models\Foto', 'id_Sensor', 'id_Sensor');
+        return $this->hasMany('App\Models\Foto', 'id_sensor', 'id_sensor');
     }
 
 }

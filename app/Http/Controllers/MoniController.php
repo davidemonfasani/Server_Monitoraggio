@@ -24,10 +24,10 @@ class MoniController extends Controller
         try {
             $request->validate(
                 [
-                    'id_Sensor' => [
+                    'id_sensor' => [
                         'required',
                         'integer',
-                        'exists:Sensors,id_Sensor',
+                        'exists:Sensors,id_sensor',
                     ],
                     'Temperatura' => [
                         'required',
@@ -43,41 +43,42 @@ class MoniController extends Controller
                     ],
                 ],
                 [//messaggi di errore personalizzati
-                    'id_Sensor.required' => 'Sensore non presente nel database',
+                    'id_sensor.required' => 'Sensore non presente nel database',
                     'Temperatura.required' => 'Valore della temperatura mancante',
                     'Umidità.required' => 'Valore della Umidità mancante',
                     'Peso.required' => 'Valore della Peso mancante',
                 ]
             );
             $recordMoni = new Monitoraggio();
-            $recordMoni->id_Sensor = $request->id_Sensor;
+            $recordMoni->id_sensor = $request->id_sensor;
             $recordMoni->Umidità = $request->Umidità;
             $recordMoni->Temperatura = $request->Temperatura;
             $recordMoni->Peso = $request->Peso;
             $recordMoni->save();
 
 
-            $sensor = Sensor::where('id_Sensor', '=', $request->id_Sensor)->first();
+            $sensor = Sensor::where('id_sensor', '=', $request->id_sensor)->first();
             $sensor->TemperaturaNow=$recordMoni->Temperatura;
             $sensor->UmiditàNow=$recordMoni->Umidità;
             $sensor->PesoNow=$recordMoni->Peso;
+            $sensor->save();//salva la temperatura corrente sul db 
             $cellar = $sensor->cellar;
 
             $message = '';
 
             if ($request->Temperatura > $sensor->TemperaturaMax) {
-                $message .= "Temperatura eccessiva sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. " . `\n`;
+                $message .= "Temperatura eccessiva sul sensore N {$sensor->id_sensor} della cantina: {$cellar->nome}. " .  "\n";
                 $obj = 'Temperatura eccessiva';
             } elseif ($request->Temperatura < $sensor->TemperaturaMin) {
-                $message .= "Temperatura insufficiente sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. " . `\n`;
+                $message .= "Temperatura insufficiente sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. " .  "\n";
                 $obj = 'Temperatura insufficiente';
             }
 
             if ($request->Umidità > $sensor->UmiditàMax) {
-                $message .= "Umidità eccessiva sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. ";
+                $message .= "Umidità eccessiva sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. ";
                 $obj .= 'Umidità eccessiva';
             } elseif ($request->Umidità < $sensor->UmiditàMin) {
-                $message .= "Umidità insufficiente sul sensore N {$sensor->id_Sensor} della cantina {$cellar->nome}. ";
+                $message .= "Umidità insufficiente sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. ";
                 $obj .= 'Umidità insufficiente';
             }
 
@@ -85,6 +86,7 @@ class MoniController extends Controller
                 $users = $cellar->users;//prende gli utenti associati alla cantina del sensore
                 foreach ($users as $user) {
                     $this->sendEmail($user, $message, $obj);
+                    return response()->json(['ERROR'=>$message]);
                 }
             } else {
                 return response()->json('Messaggio monitoraggio avvenuto');
@@ -93,7 +95,7 @@ class MoniController extends Controller
 
         } catch (ValidationException $e) {
 
-            $users = Sensor::where('id_Sensor', '=', $request->id_Sensor)->first()->cellar->users;//prende gli utenti associati alla cantina del sensore
+            $users = Sensor::where('id_sensor', '=', $request->id_sensor)->first()->cellar->users;//prende gli utenti associati alla cantina del sensore
             $errors = $e->errors(); // prende tutti gli errori
 
             // e gli converte in una sola stringa
