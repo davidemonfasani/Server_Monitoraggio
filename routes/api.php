@@ -38,7 +38,7 @@ Route::group(['prefix' => 'Sensor'], function () {
 
 });
 
-Route::group(['prefix' => 'Cellars'], function () {
+Route::group(['prefix' => 'Cellar'], function () {
     Route::post('/new',[CellarController::class, 'store']);
     Route::post('/retrive',  [CellarController::class, 'retrive_cellars']);
     Route::post('/sensors',  [CellarController::class, 'CellarsMoniINFO']);

@@ -16,16 +16,15 @@ class CellarController extends Controller
     public function store(Request $request)
     {
         try {
-
             $request->validate([
                 'token' => [
                     'required'
                 ],
                 'nome' => ['required', 'string', 'max:35', 'unique:cellars,nome'],
-                'città' => ['required', 'string', 'max:35'],
+                'citta' => ['required', 'string', 'max:35'],
                 'provincia' => ['required', 'string', 'max:35'],
                 'via' => ['required', 'string', 'max:35'],
-                'n°_civico' => ['required', 'integer'],
+                'n_civico' => ['required', 'integer'],
                 'dimensioneMq' => ['required', 'integer'],
                 'numero_sensori' => ['integer'],
             ]);
@@ -34,10 +33,10 @@ class CellarController extends Controller
             {
                 $cellar = new Cellar();
                 $cellar->nome = $request->nome;
-                $cellar->città = $request->città;
+                $cellar->citta = $request->citta;
                 $cellar->provincia = $request->provincia;
                 $cellar->via = $request->via;
-                $cellar->n°_civico = $request->n°_civico;
+                $cellar->n_civico = $request->n_civico;
                 $cellar->dimensioneMq = $request->dimensioneMq;
                 $cellar->numero_sensori = $request->numero_sensori ?? 0;
                 $cellar->save();
@@ -45,7 +44,7 @@ class CellarController extends Controller
                 $assCellar->id_cellar = $cellar->id_cellar;
                 $assCellar->id_user = $decoded_jwt->id;
                 $assCellar->save();
-                return response()->json(['Messaggio monitoraggio avvenuto' => $cellar, 'assCellar' => $assCellar]);
+                return response()->json(['Nuova cantina creata:' => $cellar, 'Associazione Utenti' => $assCellar]);
             } else {
                 return $decoded_jwt;
             }

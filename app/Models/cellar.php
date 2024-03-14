@@ -30,10 +30,10 @@ class cellar extends Model
      */
     protected $fillable = [
         'nome',
-        'città',
+        'citta',
         'provincia',
         'via',
-        'n°_civico',
+        'n_civico',
         'dimensione Mq',
         'numero_sensori',
     ];

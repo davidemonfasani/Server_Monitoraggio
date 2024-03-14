@@ -22,9 +22,9 @@ class SensorController extends Controller
                 ],
                 'id_cellar' => ['required', 'integer', 'exists:cellars,id_cellar'],
                 'TemperaturaMax' => ['required', 'numeric'],
-                'UmiditàMax' => ['required', 'numeric'],
+                'UmiditaMax' => ['required', 'numeric'],
                 'TemperaturaMin' => ['required', 'numeric'],
-                'UmiditàMin' => ['required', 'numeric'],
+                'UmiditaMin' => ['required', 'numeric'],
                 'Timer' => ['required', 'integer'],
             ]);
             $decoded_jwt = $this->checkValidToken($request->token);
@@ -35,9 +35,9 @@ class SensorController extends Controller
                     $sensor = new Sensor();
                     $sensor->id_cellar = $request->id_cellar;
                     $sensor->TemperaturaMax = $request->TemperaturaMax;
-                    $sensor->UmiditàMax = $request->UmiditàMax;
+                    $sensor->UmiditaMax = $request->UmiditaMax;
                     $sensor->TemperaturaMin = $request->TemperaturaMin;
-                    $sensor->UmiditàMin = $request->UmiditàMin;
+                    $sensor->UmiditaMin = $request->UmiditaMin;
                     $sensor->Timer = $request->Timer;
                     $sensor->save();
                     return response()->json(['Sensore aggiunto alla cantina' => $sensor]);
@@ -60,20 +60,20 @@ class SensorController extends Controller
                 'token' => ['required'],
                 'id_cellar' => ['required', 'integer', 'exists:cellars,id_cellar'],
                 'TemperaturaMax' => ['sometimes', 'required', 'numeric'],
-                'UmiditàMax' => ['sometimes', 'required', 'numeric', function ($attribute, $value, $fail) {
+                'UmiditaMax' => ['sometimes', 'required', 'numeric', function ($attribute, $value, $fail) {
                     if ($value <= 0 ) {
-                        $fail('UmiditàMax must be greater than 0.');
+                        $fail('UmiditaMax must be greater than 0.');
                     }
                     else  if ($value > 100 ) {
-                        $fail('UmiditàMax must be lower than 100.');
+                        $fail('UmiditaMax must be lower than 100.');
                     }
                 }],
                 'TemperaturaMin' => ['sometimes', 'required', 'numeric'],
-                'UmiditàMin' => ['sometimes', 'required', 'numeric', function ($attribute, $value, $fail) {
+                'UmiditaMin' => ['sometimes', 'required', 'numeric', function ($attribute, $value, $fail) {
                     if ($value <= 0) {
-                        $fail('UmiditàMin must be greater than 0.');
+                        $fail('UmiditaMin must be greater than 0.');
                     }  else  if ($value > 100 ) {
-                        $fail('UmiditàMin must be lower than 100.');
+                        $fail('UmiditaMin must be lower than 100.');
                     }
                 }],
                 'Timer' => ['sometimes', 'required', 'integer', function ($attribute, $value, $fail) {
@@ -93,14 +93,14 @@ class SensorController extends Controller
                     if ($request->has('TemperaturaMax')) {
                         $sensor->TemperaturaMax = $request->TemperaturaMax;
                     }
-                    if ($request->has('UmiditàMax')) {
-                        $sensor->UmiditàMax = $request->UmiditàMax;
+                    if ($request->has('UmiditaMax')) {
+                        $sensor->UmiditaMax = $request->UmiditaMax;
                     }
                     if ($request->has('TemperaturaMin')) {
                         $sensor->TemperaturaMin = $request->TemperaturaMin;
                     }
-                    if ($request->has('UmiditàMin')) {
-                        $sensor->UmiditàMin = $request->UmiditàMin;
+                    if ($request->has('UmiditaMin')) {
+                        $sensor->UmiditaMin = $request->UmiditaMin;
                     }
                     if ($request->has('Timer')) {
                         $sensor->Timer = $request->Timer;
@@ -109,8 +109,8 @@ class SensorController extends Controller
                     {
                         $errormsg='Temperatura minima maggiore o uguale alla massima';
                     }
-                    if($sensor->UmiditàMax<=$sensor->UmiditàMin){
-                        $errormsg= `\nUmidità minima maggiore o uguale alla massima`;
+                    if($sensor->UmiditaMax<=$sensor->UmiditaMin){
+                        $errormsg= `\nUmidita minima maggiore o uguale alla massima`;
                     }
                     if($errormsg=="")
                     {

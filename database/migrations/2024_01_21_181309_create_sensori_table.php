@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id('id_sensor');
             $table->unsignedBigInteger('id_cellar');
             $table->float('TemperaturaMax');
-            $table->float('UmiditàMax');
+            $table->float('UmiditaMax');
             $table->float('TemperaturaMin');
-            $table->float('UmiditàMin');
-            $table->float('TemperaturaNow');
-            $table->float('UmiditàNow');
-            $table->float('PesoNow');
+            $table->float('UmiditaMin');
+            $table->float('TemperaturaNow')->nullable(true);
+            $table->float('UmiditaNow')->nullable(true);
+            $table->float('PesoNow')->nullable(true);
             $table->integer('Timer');
             $table->timestamps();
             $table->foreign('id_cellar')->references('id_cellar')->on('cellars')->onDelete('cascade');

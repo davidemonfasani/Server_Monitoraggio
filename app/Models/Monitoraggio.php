@@ -14,7 +14,7 @@ class Monitoraggio extends Model
     protected $fillable = [
         'id_sensor',
         'Temperatura',
-        'Umidità',
+        'Umidita',
         'Peso'
     ];
 }

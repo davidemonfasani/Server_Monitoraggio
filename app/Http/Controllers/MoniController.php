@@ -33,7 +33,7 @@ class MoniController extends Controller
                         'required',
                         'integer',
                     ],
-                    'Umidità' => [
+                    'Umidita' => [
                         'required',
                         'integer',
                     ],
@@ -45,13 +45,13 @@ class MoniController extends Controller
                 [//messaggi di errore personalizzati
                     'id_sensor.required' => 'Sensore non presente nel database',
                     'Temperatura.required' => 'Valore della temperatura mancante',
-                    'Umidità.required' => 'Valore della Umidità mancante',
+                    'Umidita.required' => 'Valore della Umidita mancante',
                     'Peso.required' => 'Valore della Peso mancante',
                 ]
             );
             $recordMoni = new Monitoraggio();
             $recordMoni->id_sensor = $request->id_sensor;
-            $recordMoni->Umidità = $request->Umidità;
+            $recordMoni->Umidita = $request->Umidita;
             $recordMoni->Temperatura = $request->Temperatura;
             $recordMoni->Peso = $request->Peso;
             $recordMoni->save();
@@ -59,7 +59,7 @@ class MoniController extends Controller
 
             $sensor = Sensor::where('id_sensor', '=', $request->id_sensor)->first();
             $sensor->TemperaturaNow=$recordMoni->Temperatura;
-            $sensor->UmiditàNow=$recordMoni->Umidità;
+            $sensor->UmiditaNow=$recordMoni->Umidita;
             $sensor->PesoNow=$recordMoni->Peso;
             $sensor->save();//salva la temperatura corrente sul db 
             $cellar = $sensor->cellar;
@@ -74,12 +74,12 @@ class MoniController extends Controller
                 $obj = 'Temperatura insufficiente';
             }
 
-            if ($request->Umidità > $sensor->UmiditàMax) {
-                $message .= "Umidità eccessiva sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. ";
-                $obj .= 'Umidità eccessiva';
-            } elseif ($request->Umidità < $sensor->UmiditàMin) {
-                $message .= "Umidità insufficiente sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. ";
-                $obj .= 'Umidità insufficiente';
+            if ($request->Umidita > $sensor->UmiditaMax) {
+                $message .= "Umidita eccessiva sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. ";
+                $obj .= 'Umidita eccessiva';
+            } elseif ($request->Umidita < $sensor->UmiditaMin) {
+                $message .= "Umidita insufficiente sul sensore N {$sensor->id_sensor} della cantina {$cellar->nome}. ";
+                $obj .= 'Umidita insufficiente';
             }
 
             if (!empty($message)) {
