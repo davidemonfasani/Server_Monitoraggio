@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id("id_monitoraggio");
             $table->unsignedBigInteger('id_Sensor');
             $table->integer('Temperatura');
-            $table->integer('Umidità');
+            $table->integer('Umidita');
             $table->integer('Peso');
             $table->timestamps();
             $table->foreign('id_Sensor')->references('id_Sensor')->on('Sensors')->onDelete('cascade');
