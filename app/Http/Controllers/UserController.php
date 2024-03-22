@@ -47,7 +47,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
     public function Login(Request $request)
@@ -87,7 +87,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -103,7 +103,7 @@ class UserController extends Controller
             $user = User::where('email', $request->email)->first();
 
             if (!$user || !Hash::check($request->old_password, $user->password)) {
-                return response()->json(['error' => 'Invalid email or password'], 404);
+                return response()->json(['error' => 'Invalid email or password'], 400);
             }
             else{
                 $user->password = Hash::make($request->new_password);
@@ -127,7 +127,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => $e->getMessage(),
                 'request.email' => $request->email
-            ], 404);
+            ], 400);
         }
     }
 
