@@ -28,7 +28,7 @@ class CellarController extends Controller
                 'dimensioneMq' => ['required', 'integer'],
                 'numero_sensori' => ['integer'],
             ]);
-            $decoded_jwt = $this->checkValidToken($request->token);
+            $decoded_jwt = $this->decodeJWT($request->token);
             if (isset($decoded_jwt->exp)) //controlla se è  un token
             {
                 $cellar = new Cellar();
@@ -71,7 +71,7 @@ class CellarController extends Controller
                     'exists:Users,email',
                 ],
             ]);
-            $decoded_jwt = $this->checkValidToken($request->token);
+            $decoded_jwt = $this->decodeJWT($request->token);
             if (isset($decoded_jwt->exp)) //controlla se è  un token
             {
                 if ($request->email !== $decoded_jwt->email) {
@@ -119,7 +119,7 @@ class CellarController extends Controller
             $jwt = $request->token;
 
 
-            $decoded_jwt = $this->checkValidToken($jwt);
+            $decoded_jwt = $this->decodeJWT($jwt);
 
             if (isset($decoded_jwt->exp)) //controlla se è  un token
             {
@@ -148,7 +148,7 @@ class CellarController extends Controller
                 ]
 
             ]);
-            $decoded_jwt = $this->checkValidToken($request->token);
+            $decoded_jwt = $this->decodeJWT($request->token);
 
             if (isset($decoded_jwt->exp)) {
                 $cellar = Cellar::where('id_cellar', $request->id_cellar)->first();

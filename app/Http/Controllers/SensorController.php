@@ -27,7 +27,7 @@ class SensorController extends Controller
                 'UmiditaMin' => ['required', 'numeric'],
                 'Timer' => ['required', 'integer'],
             ]);
-            $decoded_jwt = $this->checkValidToken($request->token);
+            $decoded_jwt = $this->decodeJWT($request->token);
             if (isset($decoded_jwt->exp)) //controlla se è un token valido
             {
                 $users = Cellar::where('id_cellar', $request->id_cellar)->first()->users;
@@ -85,7 +85,7 @@ class SensorController extends Controller
 
 
             $sensor = Sensor::where('id_sensor', $request->id_sensor)->first();
-            $decoded_jwt = $this->checkValidToken($request->token);
+            $decoded_jwt = $this->decodeJWT($request->token);
             if (isset($decoded_jwt->exp)) {
                 $errormsg="";
                 $users = Cellar::where('id_cellar', $request->id_cellar)->first()->users;

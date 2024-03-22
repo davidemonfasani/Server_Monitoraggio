@@ -48,28 +48,16 @@ trait UserAuthTrait {
 
             return $decoded_jwt;
 
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+        }  catch (\Firebase\JWT\ExpiredException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
+        catch (\Firebase\JWT\SignatureInvalidException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
-    public function checkValidToken($jwt)
-    {
-        try {
-            $decoded_jwt = $this->decodeJWT($jwt);
-            if (!isset($decoded_jwt['error'])) {
-                if (Carbon::now()->timestamp > $decoded_jwt->iat && Carbon::now()->timestamp < $decoded_jwt->exp) {
-                    return $decoded_jwt;
-                } else {
-                    return response()->json(['error' => 'session expired'], 403);
-                }
-            }else{
-                return response()->json(['error' => $decoded_jwt['error']], 401);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 401);
-        }
-    }
 
 
 }

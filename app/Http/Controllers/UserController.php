@@ -134,7 +134,7 @@ class UserController extends Controller
 
     public function checkLogged(Request $request)
     {
-        return response()->json(["token"=>$this->checkValidToken($request->token),  "message" => 'Token Valido'], 200);
+        return $this->decodeJWT($request->token);
     }
 
 }
