@@ -48,7 +48,7 @@ class SensorController extends Controller
                 return $decoded_jwt;
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
     public function update(Request $request)
@@ -128,7 +128,7 @@ class SensorController extends Controller
                 return $decoded_jwt;
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -149,7 +149,7 @@ class SensorController extends Controller
                 return response()->json(['error' => 'sensor not associated to this cellar'], 401);
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 }

@@ -61,7 +61,7 @@ class MoniController extends Controller
             $sensor->TemperaturaNow=$recordMoni->Temperatura;
             $sensor->UmiditaNow=$recordMoni->Umidita;
             $sensor->PesoNow=$recordMoni->Peso;
-            $sensor->save();//salva la temperatura corrente sul db 
+            $sensor->save();//salva la temperatura corrente sul db
             $cellar = $sensor->cellar;
 
             $message = '';
@@ -112,7 +112,7 @@ class MoniController extends Controller
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 

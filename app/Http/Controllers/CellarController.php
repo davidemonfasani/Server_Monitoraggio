@@ -51,7 +51,7 @@ class CellarController extends Controller
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
     public function AssCellar(Request $request) //permette all'utente di associare ad una canti
@@ -94,7 +94,7 @@ class CellarController extends Controller
                         }
 
                 } else {
-                    return response()->json(['error' => 'Non puoi auto associarti una cantina'], 404);
+                    return response()->json(['error' => 'Non puoi auto associarti una cantina'], 400);
                 }
             } else {
                 return $decoded_jwt;
@@ -102,7 +102,7 @@ class CellarController extends Controller
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
     public function retrive_cellars(Request $request)
@@ -130,7 +130,7 @@ class CellarController extends Controller
         } catch (\Exception $e) {
             Log::error('Exception');
             Log::error($e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -168,7 +168,7 @@ class CellarController extends Controller
                 return $decoded_jwt;
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
