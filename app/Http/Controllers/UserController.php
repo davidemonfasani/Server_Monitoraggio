@@ -117,7 +117,7 @@ class UserController extends Controller
                     "message" => 'Password updated successfully!',
                 ];
 
-                return response()->json($response);
+                return response()->json($response, 200);
             }
 
 
@@ -134,7 +134,7 @@ class UserController extends Controller
 
     public function checkLogged(Request $request)
     {
-        return response()->checkValidToken($request->token);
+        return response()->json(["token"=>$this->checkValidToken($request->token),  "message" => 'Token Valido'], 200);
     }
 
 }
