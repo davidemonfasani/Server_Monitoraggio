@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sensor;
+use App\Models\Monitoraggio;
 use App\Models\Cellar;
 use Illuminate\Support\Facades\Log;
 use App\Traits\UserAuthTrait;
@@ -150,6 +151,27 @@ class SensorController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+    public function GetMoniReports(Request $request)//serve per configurare il sensore fisico
+    {
+        try {
+
+            $request->validate([
+                'id_cellar' => ['required', 'integer', 'exists:cellars,id_cellar'],
+                'id_sensor' => ['required', 'integer', 'exists:sensors,id_sensor'],
+            ]);
+            $sensors=Sensor::where('id_cellar', $request->id_cellar)->get();
+            
+            if($sensors->contains('id_sensor', $request->id_sensor))//cotrollas se è associato a quella catina
+            {
+                $reports = Monitoraggio::where('id_sensor', $request->id_sensor)->get();
+            return response()->json(['reports del sensore' => $reports]);
+            } else {
+                return response()->json(['error' => 'sensor not associated to this cellar'], 401);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 }

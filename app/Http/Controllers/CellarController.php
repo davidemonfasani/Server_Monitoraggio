@@ -134,7 +134,7 @@ class CellarController extends Controller
         }
     }
 
-    public function CellarsMoniINFO(Request $request)
+    public function CellarsSensors(Request $request)
     {
         try {
             $request->validate([
@@ -171,7 +171,6 @@ class CellarController extends Controller
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
-
     private function retriveCellars($decoded_jwt)
     {
         $user = User::where('id_user', $decoded_jwt->id)->first();

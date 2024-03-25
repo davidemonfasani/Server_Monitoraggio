@@ -35,13 +35,14 @@ Route::group(['prefix' => 'Sensor'], function () {
     Route::post('/new',[SensorController::class, 'store']);
     Route::put('/update',[SensorController::class, 'update']);
     Route::get('/info',[SensorController::class, 'RetriveInfo']);
+    Route::get('/moniReports',[SensorController::class,'GetMoniReports']);
 
 });
 
 Route::group(['prefix' => 'Cellar'], function () {
     Route::post('/new',[CellarController::class, 'store']);
     Route::post('/retrive',  [CellarController::class, 'retrive_cellars']);
-    Route::post('/sensors',  [CellarController::class, 'CellarsMoniINFO']);
+    Route::post('/sensors',  [CellarController::class, 'CellarsSensors']);
     Route::post('/assCellar',  [CellarController::class, 'AssCellar']);
 
     //anche se è un metodo che restituisce informazioni dal database
